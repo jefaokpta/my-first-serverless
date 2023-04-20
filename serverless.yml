@@ -4,15 +4,12 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  region: us-east-1
+  memorySize: 128
 
 functions:
-  rateHandler:
-    handler: index.run
-    events:
-      # Invoke Lambda function every minute
-      - schedule: rate(1 minute)
   cronHandler:
     handler: index.run
     events:
       # Invoke Lambda function every 2nd minute from Mon-Fri
-      - schedule: cron(0/2 * ? * MON-FRI *)
+      - schedule: cron(0/5 * ? * MON-FRI *)
