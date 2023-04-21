@@ -1,11 +1,12 @@
 const AWS = require('aws-sdk');
-const S3 = new AWS.S3();
+const cloudFormation = new AWS.CloudFormation();
 
 module.exports.run = async (event, context) => {
-  const time = new Date();
-  console.log(`Sua funcao CRON "${context.functionName}" rodou em ${time}`);
-  // list all buckets
+  console.log(`${context.functionName}" subiu a Intancia Cliente`);
 
-    await S3.listBuckets().promise()
-        .then(data => console.log(data))
+  await cloudFormation.updateStack({
+    StackName: 'cf-cliente',
+    TemplateURL: 'https://cf-templates-jefones.s3.amazonaws.com/cf-micro.yml',
+  }).promise()
+      .then(data => console.log(data))
 };
